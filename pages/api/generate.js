@@ -59,10 +59,10 @@ export default async function (req, res) {
 }
 
 function generatePrompt(text) {
-  return `I'm going to give you a passage of text. I want you to analyze the mood of the text and then generate 5 palettes, each containing 5 colors in hex format. Each palette should be unique. Do not repeat exact colors within the same palette. Do not repeat palettes. Output the palettes a single array of 5 arrays like this:
+  return `I'm going to give you a passage of text. I want you to analyze the mood of the text and then generate 3 palettes, each containing 5 colors in hex format. Each palette should be unique. Do not repeat exact colors within the same palette. Do not repeat palettes. Output the palettes a single array of 3 arrays like this:
 
   Sample output: 
-  [["#8B4513", "#708238", "#BDB76B", "#A9A9A9", "#F5DEB3"],["#8B4513", "#708238", "#BDB76B", "#A9A9A9", "#F5DEB3"]]
+  [["#8B4513", "#708238", "#BDB76B", "#A9A9A9", "#F5DEB3"],...,...]
   
   Here are some additional instructions: Only output the array and nothing else. Do not add any text to your reply.
   
