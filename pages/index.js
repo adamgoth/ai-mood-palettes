@@ -1,14 +1,16 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import ColorPalettes from '../components/ColorPalettes';
-import styles from './index.module.css';
+import { Flex, Button, Image, Heading, Textarea } from '@chakra-ui/react';
 
 export default function Home() {
   const [textInput, setTextInput] = useState('');
   const [result, setResult] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(event) {
     event.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetch('/api/generate', {
         method: 'POST',
@@ -27,12 +29,12 @@ export default function Home() {
       }
 
       setResult(JSON.parse(data.result));
-      setTextInput('');
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }
+    setIsLoading(false);
   }
 
   return (
@@ -42,21 +44,45 @@ export default function Home() {
         <link rel='icon' href='/palette.png' />
       </Head>
 
-      <main className={styles.main}>
-        <img src='/palette.png' className={styles.icon} />
-        <h3>Analyze text & generate palettes</h3>
+      <Flex
+        as='main'
+        sx={{ flexDirection: 'column', alignItems: 'center', pt: '60px' }}
+      >
+        <Image width='34px' src='/palette.png' />
+        <Heading
+          sx={{
+            fontSize: '32px',
+            lineHeight: '40px',
+            fontWeight: 'bold',
+            color: '#202123',
+            m: '16px 0 40px',
+          }}
+        >
+          Analyze text & generate palettes
+        </Heading>
         <form onSubmit={onSubmit}>
-          <input
-            type='text'
-            name='text'
-            placeholder='Enter a passage of text'
-            value={textInput}
-            onChange={(e) => setTextInput(e.target.value)}
-          />
-          <input type='submit' value='Generate palettes' />
+          <Flex sx={{ width: '320px', flexDir: 'column' }}>
+            <Textarea
+              type='text'
+              name='text'
+              placeholder='Enter a passage of text'
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+            />
+            <Button
+              isLoading={isLoading}
+              colorScheme={'green'}
+              type='submit'
+              sx={{ mt: '12px' }}
+            >
+              Generate palettes
+            </Button>
+          </Flex>
         </form>
+      </Flex>
+      <Flex sx={{ justifyContent: 'center' }}>
         <ColorPalettes palettes={result} />
-      </main>
+      </Flex>
     </div>
   );
 }
