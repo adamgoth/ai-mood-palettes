@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import ColorPalettes from '../components/ColorPalettes';
-import { Flex, Button, Image, Heading, Textarea } from '@chakra-ui/react';
+import { Flex, Button, Image, Heading, Textarea, Text } from '@chakra-ui/react';
 
 export default function Home() {
   const [textInput, setTextInput] = useState('');
@@ -73,16 +73,28 @@ export default function Home() {
               isLoading={isLoading}
               colorScheme={'green'}
               type='submit'
-              sx={{ mt: '12px' }}
+              sx={{ mt: '16px' }}
             >
-              Generate palettes
+              Generate palette
             </Button>
           </Flex>
         </form>
       </Flex>
-      <Flex sx={{ justifyContent: 'center' }}>
-        <ColorPalettes palettes={result} />
-      </Flex>
+      {result && (
+        <Flex
+          sx={{
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <ColorPalettes palette={result.palette} />
+          <Text sx={{ maxWidth: '450px', textAlign: 'center', mt: '12px' }}>
+            {result.analysis}
+          </Text>
+        </Flex>
+      )}
     </div>
   );
 }

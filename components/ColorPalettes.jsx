@@ -1,12 +1,10 @@
 import { Flex, Text } from "@chakra-ui/react";
 
-const ColorPalettes = ({ palettes }) => {
-  console.log(palettes)
-  if (!palettes) return null;
+const ColorPalettes = ({ palette }) => {
+  if (!palette) return null;
   return (
     <Flex flexWrap="wrap" mt={6} flexDir="column">
-      {palettes.map((palette, index) => (
-        <Flex key={index} p={2}>
+        <Flex p={2}>
           <Flex>
             {palette.map((color, colorIndex) => (
             <Flex sx={{ flexDir: 'column', justifyContent: 'center', alignItems: 'center'}}>
@@ -24,7 +22,6 @@ const ColorPalettes = ({ palettes }) => {
               
           </Flex>
         </Flex>
-      ))}
     </Flex>
   );
 };
